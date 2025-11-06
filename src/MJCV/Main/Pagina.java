@@ -1,3 +1,5 @@
+package MJCV.Main;
+
 /**
  * Representa uma única página de memória.
  * Contém todos os campos definidos no problema:

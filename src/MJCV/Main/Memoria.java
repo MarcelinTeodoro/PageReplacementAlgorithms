@@ -1,3 +1,5 @@
+package MJCV.Main;
+
 import java.util.Random;
 
 /**
