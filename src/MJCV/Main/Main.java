@@ -1,8 +1,6 @@
 package MJCV.Main;
 
-import MJCV.Main.Algoritmos.AlgoritmoFIFO;
-import MJCV.Main.Algoritmos.AlgoritmoNRU;
-import MJCV.Main.Algoritmos.IAlgoritmoSubstituicao;
+import MJCV.Main.Algoritmos.*;
 
 /**
  * Ponto de entrada do Simulador (Fase 5).
@@ -17,13 +15,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Executa a simulação completa para o algoritmo FIFO
         executarSimulacaoParaAlgoritmo(new AlgoritmoFIFO());
-
-        // Executa a simulação completa para o algoritmo NRU
         executarSimulacaoParaAlgoritmo(new AlgoritmoNRU());
+        executarSimulacaoParaAlgoritmo(new AlgoritmoFIFOSC());
+        executarSimulacaoParaAlgoritmo(new AlgoritmoRelogio());
+        executarSimulacaoParaAlgoritmo(new AlgoritmoLRU());
 
-        // ... (Aqui adicionaremos os outros algoritmos) ...
     }
 
     /**
