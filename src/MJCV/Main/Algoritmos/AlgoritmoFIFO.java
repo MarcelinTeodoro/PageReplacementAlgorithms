@@ -32,4 +32,13 @@ public class AlgoritmoFIFO implements IAlgoritmoSubstituicao {
         // 3. Retorna o índice da vítima que encontramos no passo 1.
         return indiceVitima;
     }
+    @Override
+    public void notificarHit(int indiceNaRam, int cicloGlobal) {
+        // O FIFO não se importa com Hits.
+    }
+
+    @Override
+    public void notificarMiss(int indiceNaRam, int cicloGlobal) {
+        // O FIFO não se importa com o tempo do Miss.
+    }
 }

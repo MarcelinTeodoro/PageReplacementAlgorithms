@@ -139,4 +139,14 @@ public class Memoria {
             paginas[indice] = novaPagina;
         }
     }
+
+    public int getIndiceDaPagina(Pagina pagina) {
+        for (int i = 0; i < tamanho; i++) {
+            // Compara a referência do objeto
+            if (paginas[i] == pagina) {
+                return i;
+            }
+        }
+        return -1; // Não deve acontecer
+    }
 }

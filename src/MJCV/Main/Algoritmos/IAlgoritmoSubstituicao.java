@@ -3,22 +3,38 @@ import MJCV.Main.Pagina;
 
 /**
  * Interface (Contrato) para todos os Algoritmos de Substituição de Página.
- * (Padrão de Projeto: Strategy)
- * * Qualquer algoritmo (FIFO, LRU, NRU, etc.) DEVE implementar esta interface
- * para ser usado pelo Simulador.
+ * (Atualizado para suportar LRU)
  */
 public interface IAlgoritmoSubstituicao {
 
     /**
-     * O método central do algoritmo.
-     * Ele analisa o estado atual da RAM e decide qual página será
-     * a "vítima" (removida).
-     * * Cada classe que implementar esta interface manterá seu próprio estado
-     * interno, se necessário (ex: o ponteiro do Relógio, a fila do FIFO).
+     * O método central do algoritmo (chamado em Page Fault).
+     * Decide qual página será a "vítima" (removida).
      *
      * @param ram O array de Páginas atualmente na Memória RAM.
      * @return O índice (posição de 0 a 9) da página que deve ser substituída.
      */
     public int encontrarIndiceVitima(Pagina[] ram);
 
+    // --- NOVOS MÉTODOS PARA O LRU E OUTROS ALGORITMOS "TIME-BASED" ---
+
+    /**
+     * Notifica o algoritmo que um Page Hit ocorreu.
+     * (O Simulador chama isso).
+     *
+     * @param indiceNaRam A posição (0-9) na RAM que foi acessada.
+     * @param cicloGlobal O "timestamp" do acesso (ciclo de 1 a 1000).
+     */
+    public void notificarHit(int indiceNaRam, int cicloGlobal);
+
+    /**
+     * Notifica o algoritmo que um Page Miss foi tratado.
+     * (O Simulador chama isso após carregar a nova página).
+     *
+     * @param indiceNaRam A posição (0-9) na RAM onde a nova página foi colocada.
+     * @param cicloGlobal O "timestamp" do acesso (ciclo de 1 a 1000).
+     */
+    public void notificarMiss(int indiceNaRam, int cicloGlobal);
 }
+
+

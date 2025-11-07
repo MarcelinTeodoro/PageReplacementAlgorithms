@@ -57,4 +57,13 @@ public class AlgoritmoNRU implements IAlgoritmoSubstituicao {
         // Se todas as páginas forem R=1, M=1, apenas retorne a primeira.
         return 0;
     }
+    @Override
+    public void notificarHit(int indiceNaRam, int cicloGlobal) {
+        // O FIFO não se importa com Hits.
+    }
+
+    @Override
+    public void notificarMiss(int indiceNaRam, int cicloGlobal) {
+        // O FIFO não se importa com o tempo do Miss.
+    }
 }

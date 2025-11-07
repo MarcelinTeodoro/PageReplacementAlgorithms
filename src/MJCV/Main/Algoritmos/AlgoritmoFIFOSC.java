@@ -73,4 +73,13 @@ public class AlgoritmoFIFOSC implements IAlgoritmoSubstituicao {
             }
         }
     }
+    @Override
+    public void notificarHit(int indiceNaRam, int cicloGlobal) {
+        // O FIFO não se importa com Hits.
+    }
+
+    @Override
+    public void notificarMiss(int indiceNaRam, int cicloGlobal) {
+        // O FIFO não se importa com o tempo do Miss.
+    }
 }

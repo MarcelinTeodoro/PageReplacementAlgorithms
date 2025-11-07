@@ -21,6 +21,7 @@ public class Simulador {
     private Memoria swap;
     private IAlgoritmoSubstituicao algoritmo; // A "Estratégia"
     private Random random;
+    private int cicloAtual = 0;
 
     /**
      * Construtor do Simulador.
@@ -45,7 +46,7 @@ public class Simulador {
                 algoritmo.getClass().getSimpleName() + " ---");
 
         for (int i = 1; i <= TOTAL_INSTRUCOES; i++) {
-
+            this.cicloAtual = i;
             // 1. Sortear a instrução (de 1 a 100)
             int instrucaoSorteada = random.nextInt(100) + 1;
 
@@ -53,8 +54,19 @@ public class Simulador {
             Pagina paginaEncontrada = ram.buscarPaginaPorInstrucao(instrucaoSorteada);
 
             if (paginaEncontrada != null) {
-                // 3.A. PAGE HIT (Encontrou!)
+                // --- 3.A. PAGE HIT ---
+
+                // Primeiro, encontramos o índice (0-9) da página
+                int indiceHit = ram.getIndiceDaPagina(paginaEncontrada);
+
+                // Trata o Hit (Bit R, Bit M)
                 tratarHitDePagina(paginaEncontrada);
+
+                // NOVO: Notifica o algoritmo sobre o Hit
+                if (indiceHit != -1) {
+                    algoritmo.notificarHit(indiceHit, this.cicloAtual);
+                }
+
             } else {
                 // 3.B. PAGE FAULT (Não encontrou!)
                 tratarFaltaDePagina(instrucaoSorteada);
@@ -100,30 +112,28 @@ public class Simulador {
      */
     private void tratarFaltaDePagina(int instrucaoQueFaltou) {
 
-        // 1. Pedir ao algoritmo para encontrar a vítima
+        // 1. Achar a vítima
         int indiceVitima = algoritmo.encontrarIndiceVitima(ram.getPaginas());
         Pagina paginaVitima = ram.getPagina(indiceVitima);
 
-        // 2. Verificar se a página vítima foi modificada (M=1) (Obs 5)
+        // 2. Salvar na SWAP se M=1 (não muda)
         if (paginaVitima.getM() == 1) {
-            // Se M=1, ela deve ser salva de volta na SWAP.
-            // O N da página vítima é o índice dela na SWAP.
             int indiceSwap = paginaVitima.getN();
             Pagina paginaNaSwap = swap.getPagina(indiceSwap);
-
-            // Atualiza a página na SWAP (o método já seta M=0)
             paginaNaSwap.atualizarDados(paginaVitima);
         }
 
-        // 3. Buscar a nova página na SWAP para carregar na RAM.
-        // A instrução (I) é N+1. Portanto, N = I - 1.
+        // 3. Buscar nova página (não muda)
         int indiceNovaPagina = instrucaoQueFaltou - 1;
         Pagina paginaDaSwap = swap.getPagina(indiceNovaPagina);
-
-        // 4. Criar uma CÓPIA da página da SWAP (importante!)
         Pagina novaPaginaParaRam = new Pagina(paginaDaSwap);
 
-        // 5. Substituir a vítima na RAM pela nova página
+        // 4. Substituir na RAM
         ram.substituirPagina(indiceVitima, novaPaginaParaRam);
+
+        // 5. NOVO: Notificar o algoritmo sobre o Miss (nova página)
+        // O índice é o da "vitima", que agora tem a nova página.
+        algoritmo.notificarMiss(indiceVitima, this.cicloAtual);
     }
 }
+
