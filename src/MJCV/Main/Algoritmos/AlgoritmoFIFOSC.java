@@ -1,20 +1,38 @@
 package MJCV.Main.Algoritmos;
 
 import MJCV.Main.Pagina;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
- * (Fase 4) Implementação do algoritmo FIFO-Second Chance (FIFO-SC).
+ * (Fase 4 - Refatorado) Implementação CONCEITUAL do FIFO-Second Chance (FIFO-SC).
  *
- * É uma melhoria do FIFO que usa o Bit R (Acesso) para evitar
- * remover páginas que foram recentemente utilizadas.
+ * Esta versão usa uma Fila (Queue) real para simular a lógica
+ * de "remover da frente" e "colocar no fim".
+ * É didaticamente correta, mas menos eficiente que o AlgoritmoRelogio.
  */
 public class AlgoritmoFIFOSC implements IAlgoritmoSubstituicao {
 
-    // O ponteiro guarda o ÍNDICE (0 a 9) da próxima página a ser VERIFICADA.
-    private int ponteiroIndice = 0;
+    // Uma fila para manter a ordem FIFO dos ÍNDICES (0-9).
+    private Queue<Integer> filaFIFO;
+
+    // Flag para inicializar a fila apenas uma vez.
+    private boolean foiInicializado = false;
 
     /**
-     * Encontra a vítima usando a lógica FIFO-SC.
+     * Preenche a fila inicial com os índices da RAM (0 a 9)
+     * na primeira vez que o algoritmo é chamado.
+     */
+    private void inicializarFila(int tamanhoRam) {
+        this.filaFIFO = new LinkedList<>();
+        for (int i = 0; i < tamanhoRam; i++) {
+            this.filaFIFO.add(i); // Adiciona 0, 1, 2, ..., 9
+        }
+        this.foiInicializado = true;
+    }
+
+    /**
+     * Encontra a vítima usando a lógica de Fila do FIFO-SC.
      *
      * @param ram O array de Páginas atualmente na Memória RAM.
      * @return O índice da página a ser substituída.
@@ -22,37 +40,36 @@ public class AlgoritmoFIFOSC implements IAlgoritmoSubstituicao {
     @Override
     public int encontrarIndiceVitima(Pagina[] ram) {
 
-        // Este loop 'while(true)' é garantido de parar.
-        // No pior caso, ele dá uma volta completa na RAM,
-        // zera todos os bits R, e na segunda volta encontra
-        // a página original (agora com R=0).
+        // Se for a primeira execução, preenche a fila (0-9)
+        if (!foiInicializado) {
+            inicializarFila(ram.length);
+        }
+
         while (true) {
+            // 1. Pega o índice na FRENTE da fila (e remove)
+            int indiceCandidato = filaFIFO.poll(); // Ex: remove o '0'
 
-            Pagina paginaCandidata = ram[ponteiroIndice];
+            Pagina paginaCandidata = ram[indiceCandidato];
 
-            // Verifica o Bit R
+            // 2. Verifica o Bit R
             if (paginaCandidata.getR() == 0) {
                 // --- Vítima Encontrada (R=0) ---
-                // Esta página não foi usada recentemente. É a vítima.
-                int indiceVitima = ponteiroIndice;
+                // O simulador vai colocar uma nova página neste índice.
+                // Colocamos o índice no FIM da fila, pois agora é o "mais novo".
+                filaFIFO.add(indiceCandidato); // Ex: adiciona o '0' no fim
 
-                // Avança o ponteiro para a posição SEGUINTE à vítima
-                ponteiroIndice = (ponteiroIndice + 1) % ram.length;
-
-                // Retorna a vítima
-                return indiceVitima;
+                return indiceCandidato; // Retorna 0 como vítima
 
             } else {
                 // --- Segunda Chance (R=1) ---
-                // Esta página foi usada. Damos uma segunda chance.
 
                 // 1. Zera o Bit R
                 paginaCandidata.setR(0);
 
-                // 2. Avança o ponteiro para verificar o próximo
-                ponteiroIndice = (ponteiroIndice + 1) % ram.length;
+                // 2. Coloca o índice de volta no FIM da fila
+                filaFIFO.add(indiceCandidato);
 
-                // O loop continua, e ele vai verificar a próxima página
+                // O loop continua para verificar o próximo da fila...
             }
         }
     }
