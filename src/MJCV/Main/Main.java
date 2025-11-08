@@ -20,6 +20,7 @@ public class Main {
         executarSimulacaoParaAlgoritmo(new AlgoritmoFIFOSC());
         executarSimulacaoParaAlgoritmo(new AlgoritmoRelogio());
         executarSimulacaoParaAlgoritmo(new AlgoritmoLRU());
+        executarSimulacaoParaAlgoritmo(new AlgoritmoWSClock());
 
     }
 

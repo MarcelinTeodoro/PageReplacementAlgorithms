@@ -1,6 +1,8 @@
 package MJCV.Main;
 
 import java.util.Random;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * Gerencia um conjunto de Páginas (seja a RAM ou a SWAP).
@@ -12,6 +14,7 @@ public class Memoria {
     private Pagina[] paginas;
     private int tamanho;
     private Random random; // Usado para sorteios
+
 
     /**
      * Construtor da Memória.
@@ -50,18 +53,35 @@ public class Memoria {
      * Sorteia 10 páginas da SWAP e as copia para cá.
      * @param swap A memória SWAP de onde as páginas serão copiadas.
      */
+    /**
+     * (Fase 1 - CORRIGIDO) Preenche esta memória como se fosse a MATRIZ RAM.
+     * Sorteia 10 páginas ÚNICAS da SWAP e as copia para cá.
+     * @param swap A memória SWAP de onde as páginas serão copiadas.
+     */
     public void inicializarRam(Memoria swap) {
         if (this.tamanho != 10) {
             System.out.println("Erro: A inicialização RAM é apenas para memória de tamanho 10.");
             return;
         }
 
-        for (int i = 0; i < 10; i++) {
+        // --- Correção da Anomalia ---
+        // Usamos um Set para garantir que os índices sorteados (0-99) sejam únicos.
+        Set<Integer> indicesUnicos = new HashSet<>();
+
+        // Continua sorteando até termos 10 índices únicos
+        while (indicesUnicos.size() < 10) {
             int indiceSorteadoSwap = random.nextInt(100); // Sorteia de 0 a 99
+            indicesUnicos.add(indiceSorteadoSwap); // .add() só insere se o número for novo
+        }
+
+        // Agora que temos 10 índices únicos, carregamos as páginas na RAM
+        int i = 0; // Índice para a RAM (0-9)
+        for (int indiceSorteadoSwap : indicesUnicos) {
             Pagina paginaDaSwap = swap.getPagina(indiceSorteadoSwap);
 
-            // Usamos o "construtor de cópia" para garantir que é um NOVO objeto
+            // Usamos o "construtor de cópia"
             paginas[i] = new Pagina(paginaDaSwap);
+            i++;
         }
     }
 
