@@ -2,8 +2,6 @@ package MJCV.Main.Algoritmos;
 import MJCV.Main.Pagina;
 
 /**
- * (Fase 4) Implementação do algoritmo First-In, First-Out (FIFO).
- *
  * Mantém um ponteiro para a página mais antiga (a primeira a entrar)
  * e a substitui quando ocorre um Page Fault.
  */
@@ -34,11 +32,11 @@ public class AlgoritmoFIFO implements IAlgoritmoSubstituicao {
     }
     @Override
     public void notificarHit(int indiceNaRam, int cicloGlobal) {
-        // O FIFO não se importa com Hits.
+        //Não se importa com Hits.
     }
 
     @Override
     public void notificarMiss(int indiceNaRam, int cicloGlobal) {
-        // O FIFO não se importa com o tempo do Miss.
+        //Não se importa com o tempo do Miss.
     }
 }

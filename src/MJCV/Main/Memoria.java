@@ -27,7 +27,7 @@ public class Memoria {
     }
 
     /**
-     * (Fase 1) Preenche esta memória como se fosse a MATRIZ SWAP.
+     *
      * Segue as regras de inicialização do problema.
      */
     public void inicializarSwap() {
@@ -49,12 +49,11 @@ public class Memoria {
     }
 
     /**
-     * (Fase 1) Preenche esta memória como se fosse a MATRIZ RAM.
+     *
      * Sorteia 10 páginas da SWAP e as copia para cá.
      * @param swap A memória SWAP de onde as páginas serão copiadas.
      */
     /**
-     * (Fase 1 - CORRIGIDO) Preenche esta memória como se fosse a MATRIZ RAM.
      * Sorteia 10 páginas ÚNICAS da SWAP e as copia para cá.
      * @param swap A memória SWAP de onde as páginas serão copiadas.
      */
@@ -107,7 +106,7 @@ public class Memoria {
     }
 
     /**
-     * (Fase 1) Procura uma página na memória pela sua Instrução (I).
+
      * @return A Pagina, se encontrada; ou null, se não encontrada (Page Fault).
      */
     public Pagina buscarPaginaPorInstrucao(int instrucao) {
@@ -120,7 +119,7 @@ public class Memoria {
     }
 
     /**
-     * (Fase 1) Zera o Bit R de todas as páginas nesta memória (Obs 4).
+     *  Zera o Bit R de todas as páginas nesta memória.
      */
     public void zerarBitsR() {
         for (Pagina p : paginas) {

@@ -3,7 +3,6 @@ package MJCV.Main;
 import MJCV.Main.Algoritmos.*;
 
 /**
- * Ponto de entrada do Simulador (Fase 5).
  *
  * Este Main orquestra a execução completa:
  * 1. Cria as memórias.
@@ -25,7 +24,7 @@ public class Main {
     }
 
     /**
-     * Método auxiliar para rodar UMA simulação completa (Obs 6).
+     * Método auxiliar para rodar UMA simulação completa.
      * Ele cria um conjunto "limpo" de memórias, roda as 1000 instruções
      * e imprime o estado antes e depois.
      *
@@ -41,7 +40,7 @@ public class Main {
         Memoria ram = new Memoria(10);
         ram.inicializarRam(swap);
 
-        // 3. Imprimir o estado inicial (Obs 6 - Início)
+        // 3. Imprimir o estado inicial
         System.out.println("\n=======================================================");
         System.out.println(">>> ESTADO INICIAL (Algoritmo: " + algoritmo.getClass().getSimpleName() + ") <<<");
         System.out.println("=======================================================");
@@ -52,7 +51,7 @@ public class Main {
         Simulador simulador = new Simulador(ram, swap, algoritmo);
         simulador.executarSimulacao();
 
-        // 5. Imprimir o estado final (Obs 6 - Final)
+        // 5. Imprimir o estado final
         System.out.println("\n=======================================================");
         System.out.println(">>> ESTADO FINAL (Algoritmo: " + algoritmo.getClass().getSimpleName() + ") <<<");
         System.out.println("=======================================================");

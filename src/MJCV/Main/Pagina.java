@@ -98,7 +98,7 @@ public class Pagina {
     public void atualizarDados(Pagina paginaModificada) {
         this.D = paginaModificada.getD();
         this.T = paginaModificada.getT();
-        this.M = 0; // Sempre salva na SWAP com M=0 (Obs 5)
+        this.M = 0; // Sempre salva na SWAP com M=0
         this.R = 0; // Bit R também pode ser zerado ao salvar
     }
 }

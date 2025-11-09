@@ -109,13 +109,14 @@ public class AlgoritmoWSClock implements IAlgoritmoSubstituicao {
     // A Obs 3 simplificou o WS-Clock, fazendo-o não precisar
     // rastrear o tempo de acesso (que o LRU precisava).
 
+
     @Override
     public void notificarHit(int indiceNaRam, int cicloGlobal) {
-        // Não é necessário para esta implementação
+        //Não se importa com Hits.
     }
 
     @Override
     public void notificarMiss(int indiceNaRam, int cicloGlobal) {
-        // Não é necessário para esta implementação
+        //Não se importa com o tempo do Miss.
     }
 }

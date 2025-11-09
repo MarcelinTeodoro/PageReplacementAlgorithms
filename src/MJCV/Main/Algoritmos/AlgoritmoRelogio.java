@@ -49,11 +49,11 @@ public class AlgoritmoRelogio implements IAlgoritmoSubstituicao {
     }
     @Override
     public void notificarHit(int indiceNaRam, int cicloGlobal) {
-        // O FIFO não se importa com Hits.
+        //Não se importa com Hits.
     }
 
     @Override
     public void notificarMiss(int indiceNaRam, int cicloGlobal) {
-        // O FIFO não se importa com o tempo do Miss.
+        //Não se importa com o tempo do Miss.
     }
 }

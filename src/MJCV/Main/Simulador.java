@@ -4,7 +4,7 @@ import java.util.Random;
 import MJCV.Main.Algoritmos.IAlgoritmoSubstituicao;
 
 /**
- * (Fase 3) O motor do simulador.
+ *  O motor do simulador.
  * Esta classe orquestra a execução das 1000 instruções,
  * trata os Page Hits e Page Faults (Miss), e gerencia
  * a comunicação entre a RAM e a SWAP.
@@ -85,7 +85,7 @@ public class Simulador {
 
     /**
      * Lógica executada quando a página é encontrada na RAM (Page Hit).
-     * (Obs 2)
+     *
      *
      * @param pagina A página que foi encontrada na RAM.
      */
@@ -106,7 +106,7 @@ public class Simulador {
 
     /**
      * Lógica executada quando a página NÃO é encontrada na RAM (Page Fault).
-     * (Obs 5)
+     *
      *
      * @param instrucaoQueFaltou A instrução (I) que precisa ser carregada.
      */
